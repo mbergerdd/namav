@@ -34,6 +34,7 @@ public class RunLeipzigIntegrationTest {
 		config.transit().setTransitScheduleFile(URL + config.transit().getTransitScheduleFile());
 		config.transit().setVehiclesFile(URL + config.transit().getVehiclesFile());
 		config.network().setInputFile(URL + config.network().getInputFile());
+//		config.network().setInputFile(URL + "leipzig-v1.0-network-with-pt_carfree-innerCity.xml.gz");
 
 		Controler controler = RunLeipzigScenario.prepare(RunLeipzigScenario.class, config,
 				"run"

@@ -1,11 +1,13 @@
 package org.matsim.run.prepare;
 
+import com.google.common.collect.Sets;
 import org.locationtech.jts.geom.Geometry;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.core.network.NetworkUtils;
+import org.matsim.core.network.algorithms.MultimodalNetworkCleaner;
 import org.matsim.core.utils.geometry.geotools.MGC;
 import org.opengis.feature.simple.SimpleFeature;
 import picocli.CommandLine;
@@ -50,8 +52,7 @@ public class PrepareNetworkCarFree implements MATSimAppCommand {
             if (!link.getAllowedModes().contains("car")){
                 continue;
             }
-            //maybe we have to define this better! test and see whether or not too many links are included to car free area
-            //if so: restrict boolean to ToNode / FromNode only! -sm0122
+
             boolean isInsideCarFreeZone = MGC.coord2Point(link.getFromNode().getCoord()).within(carFreeArea) ||
                     MGC.coord2Point(link.getToNode().getCoord()).within(carFreeArea);
 
@@ -62,7 +63,8 @@ public class PrepareNetworkCarFree implements MATSimAppCommand {
                 link.setAllowedModes(allowedModes);
             }
         }
-
+        MultimodalNetworkCleaner multimodalNetworkCleaner = new MultimodalNetworkCleaner(network);
+        multimodalNetworkCleaner.run(Sets.newHashSet("car"));
         NetworkUtils.writeNetwork(network, outputPath);
         System.out.println("Network including a car-free area has been written to " + outputPath);
 
