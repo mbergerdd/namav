@@ -6,7 +6,7 @@
     </module>
 
     <module name="controler">
-        <param name="lastIteration" value="500"/>
+        <param name="lastIteration" value="600"/>
         <param name="overwriteFiles" value="deleteDirectoryIfExists"/>
         <param name="runId" value="leipzig-test-with-drt-2operators"/>
         <param name="outputDirectory" value="./output/output-leipzig-test-with-drt-2operators"/>
